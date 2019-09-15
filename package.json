@@ -1,0 +1,29 @@
+{
+  "name": "goodvoter",
+  "version": "0.0.1",
+  "description": "Good Steem Vote Follower",
+  "main": "goodvoter.js",
+  "dependencies": {
+    "@steemit/steem-js": "^0.7.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jredbeard/goodvoter.git"
+  },
+  "keywords": [
+    "steem",
+    "vote",
+    "follower",
+    "trail"
+  ],
+  "author": "Justin Welch",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jredbeard/goodvoter/issues"
+  },
+  "homepage": "https://github.com/jredbeard/goodvoter#readme"
+}
