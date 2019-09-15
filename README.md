@@ -1,0 +1,2 @@
+# goodvoter
+Steem vote follower
