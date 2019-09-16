@@ -2,13 +2,14 @@ let config = {};
 
 // voters to follow
 config.followed = {
-    voters: ['c-cubed', 'justinw'],
+    voters: ['c-cubed', 'ocdb', 'curangel'],
 }
 
-// vote weight
+// vote weight in percent (total should equal 1)
 config.voteWeight = {
-    'c-cubed': 9000,
-    'justinw': 9000,
+    'c-cubed': 0.33,
+    'ocdb': 0.33,
+    'curangel': 0.33,
 }
 
 // target voting mana in percent

@@ -144,15 +144,21 @@ async function makeVotes(voteOperations) {
     const voter = operation[1].voter;
     const author = operation[1].author;
     const permlink = operation[1].permlink;
-    const weight = config.voteWeight[operation[1].voter];
+    const weight = operation[1].weight;
+    // find intended weight
+    // example: if we're following voter at 50% (0.5),
+    // the intended weight before voting power adjustment
+    // would be 50% of the voters original vote weight
+    const intendedWeight = config.voteWeight[operation[1].voter] * weight;
     // do not follow downvotes
-    if(operation[1].weight > 0) {
+    if(weight > 0) {
       console.log(`Voting on ${author}'s content: ${permlink}`);
       console.log(`Based on finding: ${voter}'s vote`);
-      console.log(`Intended vote weight: ${weight / 100}%`);
-      adjustWeight(weight).then(adjustedWeight => {
-        console.log(`Adjusted voting weight: ${adjustedWeight / 100}%`);
-        broadcastVote(author, permlink, adjustedWeight);
+      console.log(`Voter's vote weight: ${weight / 100}%`);
+      console.log(`Intended vote weight: ${intendedWeight / 100}%`);
+      adjustWeight(intendedWeight).then(adjustedWeight => {
+        console.log(`Adjusted voting weight: ${Math.floor(adjustedWeight) / 100}%`);
+        broadcastVote(author, permlink, Math.floor(adjustedWeight));
       });
     }
   });
