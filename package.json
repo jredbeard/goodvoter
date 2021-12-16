@@ -4,7 +4,7 @@
   "description": "Good Steem Vote Follower",
   "main": "goodvoter.js",
   "dependencies": {
-    "@steemit/steem-js": "^0.7.7"
+    "@hiveio/hive-js": "^2.0.4"
   },
   "devDependencies": {},
   "scripts": {
