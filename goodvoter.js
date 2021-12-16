@@ -1,23 +1,23 @@
-// Simple Steem Trail Following Bot (good_voter)
+// Simple Hive Trail Following Bot (good_voter)
 // This follows blocks and votes on content that another user has voted on at a specified weight
 // If your voting power is below your target, it will subtract more weight off of the vote
 // (it does this in an attempt to let voting power slowly regenerate)
 // Configuration: set voters to follow and vote weight to give in config.js
 
-const steem = require('@steemit/steem-js');
+const hive = require('@hiveio/hive-js');
 const config = require('./config');
 
 // how long to wait in miliseconds before next run
 // (set to 3 seconds)
 const blockInterval = 3000;
 
-const username = process.env.STEEM_USERNAME;
-const postingWif = process.env.STEEM_WIF;
+const username = process.env.HIVE_USERNAME;
+const postingWif = process.env.HIVE_WIF;
 
 let lastProcessedBlock = false;
 
-steem.api.setOptions({
-  url: "https://api.steemit.com",
+hive.api.setOptions({
+  url: "https://api.hive.blog",
   retry: false,
   useAppbaseApi: true,
 });
@@ -26,7 +26,7 @@ steem.api.setOptions({
 
 function getProperties() {
   return new Promise((resolve, reject) => {
-    steem.api.getDynamicGlobalProperties(function(err, result) {
+    hive.api.getDynamicGlobalProperties(function(err, result) {
       if(!err) {
         resolve(result);
       }
@@ -40,7 +40,7 @@ function getProperties() {
 
 function getBlock(blockNum) {
   return new Promise((resolve, reject) => {
-    steem.api.getBlock(blockNum, function(err, result) {
+    hive.api.getBlock(blockNum, function(err, result) {
       if(!err) {
         resolve(result);
       }
@@ -54,7 +54,7 @@ function getBlock(blockNum) {
 
 function broadcastVote(author, permlink, weight) {
   return new Promise((resolve, reject) => {
-    steem.broadcast.vote(
+    hive.broadcast.vote(
       postingWif,
       username, // Voter
       author, // Author
@@ -78,7 +78,7 @@ function broadcastVote(author, permlink, weight) {
 // returns an adjusted weight (to try to keep voting power near target)
 async function adjustWeight(originalWeight) {
   return new Promise((resolve, reject) => {
-    steem.api.getAccounts([username], function(err, result) {
+    hive.api.getAccounts([username], function(err, result) {
       if(!err) {
         const secondsago = (new Date - new Date(result[0].last_vote_time + 'Z')) / 1000;
         let vpow = result[0].voting_power + (10000 * secondsago / 432000);
@@ -175,7 +175,7 @@ function eventLoop() {
 function main() {
   console.log('Good voter. Follows votes of specified authors.');
   if(!username || !postingWif) {
-    console.log('Error: Please set STEEM_USERNAME and STEEM_WIF environemnt variables.');
+    console.log('Error: Please set HIVE_USERNAME and HIVE_WIF environemnt variables.');
     return;
   }
   const mainLoop = setInterval(function () {

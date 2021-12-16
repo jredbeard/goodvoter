@@ -2,12 +2,12 @@ let config = {};
 
 // voters to follow
 config.followed = {
-    voters: ['c-cubed', 'ocdb', 'curangel'],
+    voters: ['gtg', 'ocdb', 'curangel'],
 }
 
 // vote weight in percent (total should equal 1)
 config.voteWeight = {
-    'c-cubed': 0.33,
+    'gtg': 0.33,
     'ocdb': 0.33,
     'curangel': 0.33,
 }
