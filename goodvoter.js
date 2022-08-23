@@ -116,6 +116,14 @@ async function processNextBlocks(headBlock) {
   let result = [];
   if(!lastProcessedBlock)
     lastProcessedBlock = headBlock;
+  // check if reported head block is less than the last processed one
+  // (for nodes that do caching and report old data)
+  // (prevents double votes)
+  if(lastProcessedBlock >= headBlock)
+  {
+    console.log(`Node reported head block of ${headBlock} but I already processed ${lastProcessedBlock}`);
+    return result;
+  }
   // get all transactions in blocks since last update
   for(let i = lastProcessedBlock + 1; i <= headBlock; i++) {
       let block = await getBlock(i);
